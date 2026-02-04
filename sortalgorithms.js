@@ -264,16 +264,29 @@ document.getElementById("startBtn").addEventListener("click", async () => {
         delay = getDelay(document.getElementById("speedRange").value);
         isSorting = true;
         isPaused = false;
-        document.getElementById("algorithmSelect").disabled = true;
-        document.getElementById("arraySizeSelect").disabled = true;
-        document.getElementById("generateNewArrayBtn").disabled = true;
+        setDisableForControls(true);
         await sort(algorithm);
-        document.getElementById("algorithmSelect").disabled = false;
-        document.getElementById("arraySizeSelect").disabled = false;
-        document.getElementById("generateNewArrayBtn").disabled = false;
+        setDisableForControls(false);
         isSorting = false;
     }
 });
+
+function setDisableForControls(disabled){
+    const controls = [
+        document.getElementById("algorithmSelect"),
+        document.getElementById("arraySizeSelect"),
+        document.getElementById("generateNewArrayBtn")
+    ];
+
+    controls.forEach(control => {
+        control.disabled = disabled;
+        if (disabled){
+            control.classList.add('disabled');
+        } else {
+            control.classList.remove('disabled');
+        }
+    })
+}
 
 // Pause Button
 document.getElementById("pauseBtn").addEventListener("click", () => {
@@ -287,7 +300,7 @@ document.getElementById("pauseBtn").addEventListener("click", () => {
 document.getElementById("stopBtn").addEventListener("click", () => {
     isSorting = false;
     isPaused = false;
-    // Optional: Visualisierung zurücksetzen
+    document.getElementById("pauseBtn").textContent = "⏸ Pause";
 });
 
 document.getElementById("speedRange").addEventListener("input", (e) => {
