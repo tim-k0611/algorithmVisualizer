@@ -1,4 +1,5 @@
 import { MAX_DELAY } from './config.js';
+import { state } from './state.js';
 
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -17,6 +18,6 @@ export function generateRandomArray(size, maxValue) {
     return array;
 }
 
-export function swapArrayElements(array, i, j) {
-    [array[i], array[j]] = [array[j], array[i]];
+export function swapArrayElements(i, j) {
+    [state.array[i], state.array[j]] = [state.array[j], state.array[i]];
 }

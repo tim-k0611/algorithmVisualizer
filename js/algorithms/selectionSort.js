@@ -37,7 +37,7 @@ export async function selectionSort() {
         if (!state.isSorting) break;
 
         let smallest = await findSmallest(counter);
-        await swapVisualization(state.array, counter, smallest);
+        await swapVisualization(counter, smallest);
         setCanvasColor(smallest, COLORS.DEFAULT);
         setCanvasColor(counter, COLORS.SORTED);
     }

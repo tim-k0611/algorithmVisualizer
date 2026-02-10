@@ -1,5 +1,6 @@
 import { COLORS, BAR_WIDTH, HEIGHT_MULTIPLICATOR } from './config.js';
 import { swapArrayElements } from './utils.js';
+import { state } from './state.js';
 
 export function getCanvas(index) {
     return document.getElementById(`canvasNr${index}`);
@@ -52,10 +53,10 @@ export function initializeVisualization(array) {
     });
 }
 
-export async function swapVisualization(array, i, j) {
-    setCanvasHeight(i, array[j]);
-    setCanvasHeight(j, array[i]);
-    setLabelValue(i, array[j]);
-    setLabelValue(j, array[i]);
-    swapArrayElements(array, i, j);
+export async function swapVisualization(i, j) {
+    setCanvasHeight(i, state.array[j]);
+    setCanvasHeight(j, state.array[i]);
+    setLabelValue(i, state.array[j]);
+    setLabelValue(j, state.array[i]);
+    swapArrayElements(i, j);
 }
