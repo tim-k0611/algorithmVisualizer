@@ -19,11 +19,11 @@ export function setCanvasColor(index, color) {
 }
 
 export function setLabelValue(index, value) {
-    getValueLabel(index).innerHTML = value;
+    getValueLabel(index).textContent = value;
 }
 
 function createCanvas(index, value) {
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement("div");
     canvas.id = `canvasNr${index}`;
     canvas.style = `background-color: ${COLORS.DEFAULT}; width: ${BAR_WIDTH}px; height: ${value * HEIGHT_MULTIPLICATOR}px`;
     return canvas;
@@ -34,7 +34,7 @@ function createValueLabel(index, value) {
     valueElement.id = `valueNr${index}`;
     valueElement.classList.add("text-light");
     valueElement.style = `width: ${BAR_WIDTH}px; text-align: center; display: inline-block; box-sizing: border-box; margin: 0; padding: 0;`;
-    valueElement.innerHTML = `${value}`;
+    valueElement.textContent = `${value}`;
     return valueElement;
 }
 
@@ -53,10 +53,16 @@ export function initializeVisualization(array) {
     });
 }
 
-export async function swapVisualization(i, j) {
+export function swapVisualization(i, j) {
     setCanvasHeight(i, state.array[j]);
     setCanvasHeight(j, state.array[i]);
     setLabelValue(i, state.array[j]);
     setLabelValue(j, state.array[i]);
     swapArrayElements(i, j);
+}
+
+export function resetColors(){
+    for(let i = 0; i < state.array.length; i++) {
+        setCanvasColor(i, COLORS.DEFAULT);
+    }
 }

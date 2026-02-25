@@ -1,7 +1,7 @@
 import { state, setState } from './state.js';
 import { ALGORITHMS, PIVOT_STRATEGIES, MAX_VALUE } from './config.js';
 import { getDelay, generateRandomArray } from './utils.js';
-import { initializeVisualization } from './visualization.js';
+import { initializeVisualization, resetColors } from './visualization.js';
 import { selectionSort } from './algorithms/selectionSort.js';
 import { quickSort } from './algorithms/quickSort.js';
 
@@ -69,6 +69,7 @@ export function initializeEventListeners() {
     // Stop Button
     document.getElementById("stopBtn").addEventListener("click", () => {
         setState({ isSorting: false, isPaused: false });
+        resetColors();
         document.getElementById("pauseBtn").textContent = "⏸ Pause";
     });
 

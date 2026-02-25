@@ -1,8 +1,6 @@
 import { state } from '../state.js';
-import { PIVOT_STRATEGIES } from '../config.js';
-import { swapVisualization } from '../visualization.js';
-import { setCanvasColor } from '../visualization.js';
-import { COLORS } from '../config.js';
+import { PIVOT_STRATEGIES, COLORS } from '../config.js';
+import { swapVisualization, setCanvasColor } from '../visualization.js';
 import { sleep } from '../utils.js';
 
 export async function quickSort(low = 0, high = state.array.length - 1) {
@@ -28,7 +26,7 @@ async function partition(low, high) {
     if (pivotIndex !== high) {
         setCanvasColor(pivotIndex, COLORS.COMPARING);
         await sleep(state.delay);
-        await swapVisualization(high, pivotIndex);
+        swapVisualization(high, pivotIndex);
     }
 
     const pivot = state.array[high];
@@ -44,12 +42,12 @@ async function partition(low, high) {
             await sleep(100);
         }
 
-        if (!state.isSorting) break;
+        if (!state.isSorting) return;
 
         if (state.array[i] < pivot) {
             lowerThanPivotIndex++;
             if (i !== lowerThanPivotIndex) {
-                await swapVisualization(i, lowerThanPivotIndex);
+                swapVisualization(i, lowerThanPivotIndex);
             }
             if (i !== high) {
                 setCanvasColor(i, COLORS.DEFAULT);
@@ -59,7 +57,7 @@ async function partition(low, high) {
         if (i !== high) setCanvasColor(i, COLORS.DEFAULT);
     }
 
-    await swapVisualization(lowerThanPivotIndex + 1, high);
+    swapVisualization(lowerThanPivotIndex + 1, high);
     setCanvasColor(lowerThanPivotIndex + 1, COLORS.SORTED);
 
     return lowerThanPivotIndex + 1;
@@ -71,5 +69,6 @@ function getPivotIndex(low, high, pivotStrategy) {
         case PIVOT_STRATEGIES.LAST: return high;
         case PIVOT_STRATEGIES.MEDIAN: return Math.floor((high + low) / 2);
         case PIVOT_STRATEGIES.RANDOM: return Math.floor((Math.random() * (high - low + 1)) + low);
+        default: return Math.floor((high + low) / 2);
     }
 }
